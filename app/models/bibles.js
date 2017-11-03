@@ -2,24 +2,21 @@
 
 const path = require('path')
 const sqlite3 = require('sqlite3').verbose();
-const dbPath = path.resolve(__dirname, '../../data/bibles/esv.bbli')
-const dbesv = new sqlite3.Database(dbPath);
-// const dbkjv = new sqlite3.Database(`../../data/bibles/kjv.bbli`);
-// const dbweb = new sqlite3.Database(`../../data/bibles/web.bbli`);
+
 
 let currentBible;
 
-const getBook = (book, chapter) => {
+const getBook = (version, book, chapter) => {
   return new Promise( (resolve, reject) => {
-    currentBible = dbesv;
+    console.log("mod version", version);
+    const versionPath = path.resolve(__dirname, `../../data/bibles/${version}.bbli`);
+    const currentBible = new sqlite3.Database(versionPath);
+    console.log('current bible', currentBible);
     currentBible.all(`SELECT * FROM Bible WHERE Book = ${book} and Chapter = ${chapter}`, (err, data) => {
       if (err) return reject(err);
-      // console.log('data', data);
       resolve(data);
     })
   })
 } 
-
-// getBook();
 
 module.exports = { getBook };

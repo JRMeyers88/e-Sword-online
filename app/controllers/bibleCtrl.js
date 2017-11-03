@@ -2,8 +2,8 @@
 
 const { getBook } = require('../models/bibles');
 
-module.exports.getABook = (req, res, next) => {
-  getBook(1, 1)
+module.exports.getABook = ({params:{version, book, chapter}}, res, next) => {
+  getBook(version, book, chapter)
   .then( (data) => {
     res.status(200).json(data);
   })

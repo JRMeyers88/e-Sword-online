@@ -1,0 +1,20 @@
+<div class='nav' ng-app="eSword" ng-controller="BibleController">
+
+  <h2>select bible</h2>
+
+  <select ng-change="getBibles()" ng-options="bible as bible.tag for bible in bibles" ng-model="selection.translation"></select>  
+  
+  <select ng-change="getBibles()" ng-options="book as book.tag for book in books" ng-model="selection.book"></select>
+
+  <select ng-change="getBibles()" ng-options="chapter for chapter in chapters" ng-model="selection.chapter"></select>
+
+
+  <h4>selected bible: {{selection.translation.tag}}</h4>
+  <h4>selected book: {{selection.book.tag}}</h4>
+  <h4>selected chapter: {{selection.chapter}}</h4>
+
+  <div ng-repeat="content in contents">
+    <p>{{content.Scripture}}</p>
+  </div>
+
+</div>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>e-Sword Online</title>
+  </head>
+
+  <body ng-app="eSword">
+    <div ng-include="partials/main.html"></div>
+
+    <div ng-view></div>
+
+    <div ng-include="footer"></div>
+
+    <!-- SCRIPTS -->
+      <script src="node_modules/jquery/dist/jquery.min.js"></script>
+      <script src="node_modules/angular/angular.min.js"></script>
+      <script src="node_modules/angular-route/angular-route.min.js"></script>
+
+    <!-- APP FILE -->
+      <script src="app.js"></script>
+
+    <!-- PROVIDERS -->
+      <script src="factories/bibleFactory.js"></script>
+    
+    <!-- CONTROLLERS -->
+      <script src="controllers/bibleController.js"></script>
+
+  </body>
+</html>

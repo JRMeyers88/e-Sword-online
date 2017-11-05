@@ -4,17 +4,25 @@
 
   <select ng-change="getBibles()" ng-options="bible as bible.tag for bible in bibles" ng-model="selection.translation"></select>  
   
-  <select ng-change="getBibles()" ng-options="book as book.tag for book in books" ng-model="selection.book"></select>
+  <select ng-change="getBibleAndCommentary()" ng-options="book as book.title for book in books" ng-model="selection.book"></select>
 
-  <select ng-change="getBibles()" ng-options="chapter for chapter in chapters" ng-model="selection.chapter"></select>
+  <select ng-change="getBibles()" ng-options="chapter as chapter.chap for chap in books" ng-model="selection.chapter"></select>
+
+  <select ng-change="getCommentaries()" ng-options="comment as comment.tag for comment in commentaries" ng-model="selection.commentary"></select>
+
 
 
   <h4>selected bible: {{selection.translation.tag}}</h4>
-  <h4>selected book: {{selection.book.tag}}</h4>
-  <h4>selected chapter: {{selection.chapter}}</h4>
+  <h4>selected book: {{selection.book.title}}</h4>
+  {{selection.book.chap}}
+  <h4>selected chapter: {{book.chap}}</h4>
 
-  <div ng-repeat="content in contents">
-    <p>{{content.Scripture}}</p>
+  <div class="biblediv" ng-repeat="content in bibleContents">
+    <p>{{content.Verse}}{{content.Scripture}}</p>
+  </div>
+
+  <div class="biblediv" ng-repeat="content in commentaryContents">
+    <p>{{content.Comments}}</p>
   </div>
 
 </div>

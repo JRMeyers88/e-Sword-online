@@ -16,7 +16,7 @@ eSword.factory('BibleFactory', function($q, $http, Url) {
         });
     };
 
-    let getCommentaries = (commentary, book) => {
+    let getBookCommentaries = (commentary, book) => {
         return $q( (resolve, reject) => {
             $http.get(`${baseURL}/Comments/${commentary.id}/${book.id}`)
             .then( (data) => {
@@ -28,6 +28,18 @@ eSword.factory('BibleFactory', function($q, $http, Url) {
         });
     };
 
-    return { getBibles, getCommentaries }
+    let getVerseCommentaries = (commentary, book, chapter, verse) => {
+        return $q( (resolve, reject) => {
+            $http.get(`${baseURL}/Comments/${commentary.id}/${book.id}/${chapter}/${verse}`)
+            .then( (data) => {
+                resolve(data);
+            })
+            .catch( (err) => {
+                reject(err);
+            });
+        });
+    };
+
+    return { getBibles, getBookCommentaries, getVerseCommentaries }
   
 })

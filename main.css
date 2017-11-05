@@ -1,0 +1,31 @@
+.nav {
+  width: 100%;
+}
+
+.biblediv {
+  width: 50%;
+  height: 500px;
+  float: left;
+  overflow: scroll;
+}
+
+.commentdiv {
+  width: 50%;
+  height: 500px;
+  float: right;
+  overflow: scroll;
+}
+
+.kjvpdiv {
+  width: 50%;
+  height: 300px;
+  float: left;
+  overflow: scroll;
+}
+
+.dictdiv {
+  width: 50%;
+  height: 300px;
+  float: right;
+  overflow: scroll;
+}

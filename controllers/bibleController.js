@@ -4,35 +4,43 @@ eSword.controller('BibleController', function($scope, $q, $window, BibleFactory)
 
 
   $scope.selection = {
-    translation: null,
-    book: null,
+    translation: {tag: "English Standard", id: "esv"},
+    book: {title: "Genesis", id: 1},
     chapter: 1,
-    commentary: null
+    commentary: {tag: "Darby", id: "darby"},
+    verse: 1
   }
 
   $scope.getBibleAndCommentary = () => {
-    $scope.getBibles();
-    $scope.getCommentaries();
+    $scope.getBible();
+    $scope.getBookCommentary();
   }
 
-  $scope.getBibles = () => {
+  $scope.getBible = () => {
     BibleFactory.getBibles($scope.selection.translation, $scope.selection.book, $scope.selection.chapter)
       .then( (bibles) => {
-        console.log('bibles', bibles);
+        console.log('translation', $scope.selection.translation);
         $scope.bibleContents = bibles.data;
-        console.log('scope.contents', $scope.bibleContents);
       })
       .catch( (err) => {
         console.log('error', err);
       });
   }
 
-  $scope.getCommentaries = () => {
-    BibleFactory.getCommentaries($scope.selection.commentary, $scope.selection.book)
+  $scope.getBookCommentary = () => {
+    BibleFactory.getBookCommentaries($scope.selection.commentary, $scope.selection.book)
       .then( (commentaries) => {
-        console.log('commentary', commentaries);
         $scope.commentaryContents = commentaries.data;
-        console.log('scope.commentaryContents', $scope.commentaryContents);
+      })
+      .catch( (err) => {
+        console.log('error', err);
+      });
+  }
+
+  $scope.getVerseCommentary = () => {
+    BibleFactory.getVerseCommentaries($scope.selection.commentary, $scope.selection.book, $scope.selection.chapter, $scope.selection.verse)
+      .then( (commentaries) => {
+        $scope.commentaryContents = commentaries.data;
       })
       .catch( (err) => {
         console.log('error', err);

@@ -2,27 +2,40 @@
 
   <h2>select bible</h2>
 
-  <select ng-change="getBibles()" ng-options="bible as bible.tag for bible in bibles" ng-model="selection.translation"></select>  
-  
-  <select ng-change="getBibleAndCommentary()" ng-options="book as book.title for book in books" ng-model="selection.book"></select>
+  <div class="nav">
+    <select ng-change="getBible()" ng-options="bible as bible.tag for bible in bibles" ng-model="selection.translation"></select>  
+    
+    <select ng-change="getBibleAndCommentary()" ng-options="book as book.title for book in books" ng-model="selection.book"></select>
 
-  <select ng-change="getBibles()" ng-options="chapter as chapter.chap for chap in books" ng-model="selection.chapter"></select>
+    <select ng-change="getBible()" ng-options="chapter as chapter.chap for chap in books" ng-model="selection.chapter"></select>
 
-  <select ng-change="getCommentaries()" ng-options="comment as comment.tag for comment in commentaries" ng-model="selection.commentary"></select>
-
-
-
-  <h4>selected bible: {{selection.translation.tag}}</h4>
-  <h4>selected book: {{selection.book.title}}</h4>
-  {{selection.book.chap}}
-  <h4>selected chapter: {{book.chap}}</h4>
-
-  <div class="biblediv" ng-repeat="content in bibleContents">
-    <p>{{content.Verse}}{{content.Scripture}}</p>
+    <select ng-change="getBookCommentary()" ng-options="comment as comment.tag for comment in commentaries" ng-model="selection.commentary"></select>
   </div>
 
-  <div class="biblediv" ng-repeat="content in commentaryContents">
-    <p>{{content.Comments}}</p>
+  <div class="biblediv">
+    <div ng-repeat="content in bibleContents">
+      <p><a ng-click="getVerseCommentary()" ng-model="selection.verse">{{content.Verse}}</a>{{content.Scripture}}</p>
+    </div>
   </div>
+
+  <div class="commentdiv">
+      <div ng-repeat="content in commentaryContents">
+        <p>{{content.Comments}}</p>
+      </div>
+    </div>
+
+  <div class="dictdiv">
+    <div ng-repeat="content in commentaryContents">
+      <p>{{content.Comments}}</p>
+    </div>
+  </div>
+
+  <div class="kjvpdiv">
+    <div ng-repeat="content in bibleContents">
+      <p><a ng-click="getVerseCommentary()" ng-model="selection.verse">{{content.Verse}}</a>{{content.Scripture}}</p>
+    </div>
+  </div>
+
+
 
 </div>

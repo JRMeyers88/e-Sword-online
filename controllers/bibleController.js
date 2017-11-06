@@ -6,21 +6,50 @@ eSword.controller('BibleController', function($scope, $q, $window, BibleFactory)
   $scope.selection = {
     translation: {tag: "English Standard", id: "esv"},
     book: {title: "Genesis", id: 1},
-    chapter: 1,
-    commentary: {tag: "Darby", id: "darby"},
-    verse: 1
+    chapter: {Chapter: 1},
+    commentary: {tag: "Darby", id: "darby"}
   }
 
   $scope.getBibleAndCommentary = () => {
     $scope.getBible();
     $scope.getBookCommentary();
+    $scope.getBookChapters();
+  }
+
+  $scope.getVerse = (verse) => {
+    console.log('verse', verse)
+    $scope.getVerseCommentary(verse);
+    $scope.getBibleVerse(verse);
   }
 
   $scope.getBible = () => {
-    BibleFactory.getBibles($scope.selection.translation, $scope.selection.book, $scope.selection.chapter)
-      .then( (bibles) => {
-        console.log('translation', $scope.selection.translation);
-        $scope.bibleContents = bibles.data;
+    console.log('chapter??', $scope.selection.chapter);
+    BibleFactory.getBible($scope.selection.translation, $scope.selection.book, $scope.selection.chapter.Chapter)
+      .then( (bible) => {
+        // console.log('bible', bible);
+        $scope.bibleContents = bible.data;
+      })
+      .catch( (err) => {
+        console.log('error', err);
+      });
+  }
+
+  $scope.getBookChapters = () => {
+    BibleFactory.getChapters($scope.selection.book)
+    .then( (chapters) => {
+      $scope.chapters = chapters.data;
+      console.log('chapters', $scope.chapters);
+    })
+    .catch( (err) => {
+      console.log('err', err);
+    })
+  }
+
+  $scope.getBibleVerse = (verse) => {
+    BibleFactory.getBibleVerse($scope.selection.book, $scope.selection.chapter.Chapter, verse)
+      .then( (bibleVerse) => {
+        console.log('bible verse', bibleVerse);
+        $scope.bibleVerse = bibleVerse.data;
       })
       .catch( (err) => {
         console.log('error', err);
@@ -28,19 +57,19 @@ eSword.controller('BibleController', function($scope, $q, $window, BibleFactory)
   }
 
   $scope.getBookCommentary = () => {
-    BibleFactory.getBookCommentaries($scope.selection.commentary, $scope.selection.book)
-      .then( (commentaries) => {
-        $scope.commentaryContents = commentaries.data;
+    BibleFactory.getBookCommentary($scope.selection.commentary, $scope.selection.book)
+      .then( (commentary) => {
+        $scope.commentaryContents = commentary.data;
       })
       .catch( (err) => {
         console.log('error', err);
       });
   }
 
-  $scope.getVerseCommentary = () => {
-    BibleFactory.getVerseCommentaries($scope.selection.commentary, $scope.selection.book, $scope.selection.chapter, $scope.selection.verse)
-      .then( (commentaries) => {
-        $scope.commentaryContents = commentaries.data;
+  $scope.getVerseCommentary = (verse) => {
+    BibleFactory.getVerseCommentary($scope.selection.commentary, $scope.selection.book, $scope.selection.chapter.Chapter, verse)
+      .then( (verseCommentary) => {
+        $scope.commentaryContents = verseCommentary.data;
       })
       .catch( (err) => {
         console.log('error', err);

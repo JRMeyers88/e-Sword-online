@@ -7,14 +7,14 @@
     
     <select ng-change="getBibleAndCommentary()" ng-options="book as book.title for book in books" ng-model="selection.book"></select>
 
-    <select ng-change="getBible()" ng-options="chapter as chapter.chap for chap in books" ng-model="selection.chapter"></select>
+    <select ng-change="getBible()" ng-options="chapter as chapter.Chapter for chapter in chapters" ng-model="selection.chapter"></select>
 
     <select ng-change="getBookCommentary()" ng-options="comment as comment.tag for comment in commentaries" ng-model="selection.commentary"></select>
   </div>
 
   <div class="biblediv">
     <div ng-repeat="content in bibleContents">
-      <p><a ng-click="getVerseCommentary()" ng-model="selection.verse">{{content.Verse}}</a>{{content.Scripture}}</p>
+      <p><a ng-click="getVerse(content.Verse)" ng-model="selection.verse">{{content.Verse}}{{content.Scripture}}<a></p>
     </div>
   </div>
 
@@ -25,14 +25,14 @@
     </div>
 
   <div class="dictdiv">
-    <div ng-repeat="content in commentaryContents">
+    <!-- <div ng-repeat="content in commentaryContents">
       <p>{{content.Comments}}</p>
-    </div>
+    </div> -->
   </div>
 
   <div class="kjvpdiv">
-    <div ng-repeat="content in bibleContents">
-      <p><a ng-click="getVerseCommentary()" ng-model="selection.verse">{{content.Verse}}</a>{{content.Scripture}}</p>
+    <div ng-repeat="content in bibleVerse">
+      <p>{{content.Verse}}{{content.Scripture}}</p>
     </div>
   </div>
 

@@ -20,13 +20,13 @@ eSword.controller('BibleController', function($scope, $q, $window, BibleFactory)
     console.log('verse', verse)
     $scope.getVerseCommentary(verse);
     $scope.getBibleVerse(verse);
+    $scope.getTSKComment(verse)
   }
 
   $scope.getBible = () => {
-    console.log('chapter??', $scope.selection.chapter);
     BibleFactory.getBible($scope.selection.translation, $scope.selection.book, $scope.selection.chapter.Chapter)
       .then( (bible) => {
-        // console.log('bible', bible);
+        console.log('bible', bible.data);
         $scope.bibleContents = bible.data;
       })
       .catch( (err) => {
@@ -35,10 +35,9 @@ eSword.controller('BibleController', function($scope, $q, $window, BibleFactory)
   }
 
   $scope.getBookChapters = () => {
-    BibleFactory.getChapters($scope.selection.book)
+    BibleFactory.getChapters($scope.selection.translation, $scope.selection.book)
     .then( (chapters) => {
       $scope.chapters = chapters.data;
-      console.log('chapters', $scope.chapters);
     })
     .catch( (err) => {
       console.log('err', err);
@@ -74,6 +73,16 @@ eSword.controller('BibleController', function($scope, $q, $window, BibleFactory)
       .catch( (err) => {
         console.log('error', err);
       });
+  }
+
+  $scope.getTSKComment = (verse) => {
+    BibleFactory.getTSKCommentary($scope.selection.book, $scope.selection.chapter.Chapter, verse)
+    .then( (commentVerse) => {
+      $scope.tskContents = commentVerse.data;
+    })
+    .catch( (err) => {
+      console.log('error', err);
+    })
   }
 
   $scope.bibles = [

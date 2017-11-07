@@ -1,6 +1,6 @@
 'use strict';
 
-const eSword = angular.module("eSword", ["ngRoute"])
+const eSword = angular.module("eSword", ["ngRoute", "ngSanitize"])
 .constant("Url", "https://localhost:5000");
 
 eSword.config( ($routeProvider) => {

@@ -14,25 +14,31 @@
 
   <div class="biblediv">
     <div ng-repeat="content in bibleContents">
-      <p><a ng-click="getVerse(content.Verse)" ng-model="selection.verse">{{content.Verse}}{{content.Scripture}}<a></p>
+        <a ng-click="getVerse(content.Verse)" ng-model="selection.verse">
+          <p 
+            ng-bind-html="(content.Book)+':'+(content.Chapter)+':'+(content.Verse)+' '+(content.Scripture)"
+          >
+        <!-- {{content.Book}}:{{content.Chapter}}:{{content.Verse}} {{content.Scripture}} -->
+        </p>
+      </a>
     </div>
   </div>
 
   <div class="commentdiv">
       <div ng-repeat="content in commentaryContents">
-        <p>{{content.Comments}}</p>
+        <p ng-bind-html="content.Comments"></p>
       </div>
     </div>
 
   <div class="dictdiv">
-    <!-- <div ng-repeat="content in commentaryContents">
-      <p>{{content.Comments}}</p>
-    </div> -->
+    <div ng-repeat="content in tskContents">
+      <p ng-bind-html="content.Comments"></p>
+    </div>
   </div>
 
   <div class="kjvpdiv">
     <div ng-repeat="content in bibleVerse">
-      <p>{{content.Verse}}{{content.Scripture}}</p>
+      <p ng-bind-html="content.Scripture"></p>
     </div>
   </div>
 

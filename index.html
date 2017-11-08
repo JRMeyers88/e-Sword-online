@@ -3,20 +3,20 @@
   <head>
     <title>e-Sword Online</title>
     <link rel="stylesheet" type="text/css" href="main.css">
+    
   </head>
 
   <body ng-app="eSword">
     <div ng-include="partials/main.html"></div>
 
-    <div ng-view></div>
-
-    <div ng-include="footer"></div>
+    <div ng-view autoscroll></div>
 
     <!-- SCRIPTS -->
       <script src="node_modules/jquery/dist/jquery.min.js"></script>
       <script src="node_modules/angular/angular.min.js"></script>
       <script src="node_modules/angular-route/angular-route.min.js"></script>
       <script src="node_modules/angular-sanitize/angular-sanitize.js"></script>
+      <script src="directives/scrollDirective.js"></script>
 
     <!-- APP FILE -->
       <script src="app.js"></script>

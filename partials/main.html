@@ -1,47 +1,59 @@
 <div class='nav' ng-app="eSword" ng-controller="BibleController">
 
-  <h2>select bible</h2>
+  <h1>Select</h1>
+  
+  <div class="header">
 
-  <div class="nav">
-    <select ng-change="getBible()" ng-options="bible as bible.tag for bible in bibles" ng-model="selection.translation"></select>  
-    
-    <select ng-change="getBibleAndCommentary()" ng-options="book as book.title for book in books" ng-model="selection.book"></select>
 
-    <select ng-change="getBible()" ng-options="chapter as chapter.Chapter for chapter in chapters" ng-model="selection.chapter"></select>
+    <div class="bars">
+      <br>
+      <select class="bibleselect" ng-change="getBible()" ng-options="bible as bible.tag for bible in bibles track by bible.id" ng-model="selection.translation"></select>  
+      
+      <select ng-change="getBibleAndCommentary()" ng-options="book as book.title for book in books track by book.id" ng-model="selection.book"></select>
 
-    <select ng-change="getBookCommentary()" ng-options="comment as comment.tag for comment in commentaries" ng-model="selection.commentary"></select>
-  </div>
+      <select ng-change="getBible()" ng-options="chapter as chapter.Chapter for chapter in chapters track by chapter.Chapter" ng-model="selection.chapter"></select>
 
-  <div class="biblediv">
-    <div ng-repeat="content in bibleContents">
-        <a ng-click="getVerse(content.Verse)" ng-model="selection.verse">
-          <p 
-            ng-bind-html="(content.Book)+':'+(content.Chapter)+':'+(content.Verse)+' '+(content.Scripture)"
-          >
-        <!-- {{content.Book}}:{{content.Chapter}}:{{content.Verse}} {{content.Scripture}} -->
-        </p>
-      </a>
+      <button><red>Last</red></button>      
+      <button>Next</button> 
+
+      <select class="commentselect" ng-change="getBookCommentary()" ng-options="comment as comment.tag for comment in commentaries track by comment.id" ng-model="selection.commentary"></select>
+      <br>
+     
+      
     </div>
   </div>
 
-  <div class="commentdiv">
+  <div class="study">
+
+  <div class="biblediv" autoscroll>
+    <div ng-repeat="content in bibleContents">
+
+        <p ng-click="selected = !selected; getVerse(content.Verse)" ng-class="{'selectedverse':selected}" ng-model="selection.verse"><span ng-bind-html="(content.abbr)+' '+(content.Chapter)+':'+(content.Verse)+' '"></span><span ng-bind-html="trustAsHtml(content.Scripture)"></span></p>
+      
+    </div>
+  </div>
+
+  <div class="commentdiv" scroll-to-top-when="items_changed">
       <div ng-repeat="content in commentaryContents">
-        <p ng-bind-html="content.Comments"></p>
+        <p ng-bind-html="trustAsHtml(content.Comments)"></p>
       </div>
     </div>
 
   <div class="dictdiv">
     <div ng-repeat="content in tskContents">
-      <p ng-bind-html="content.Comments"></p>
+      <p ng-bind-html="trustAsHtml(content.Comments)"></p>
     </div>
   </div>
 
   <div class="kjvpdiv">
     <div ng-repeat="content in bibleVerse">
-      <p ng-bind-html="content.Scripture"></p>
+      <p ng-bind-html="trustAsHtml(content.Scripture)"></p>
     </div>
   </div>
 
+  </div>
+
+  <div class="footer"></div>
 
 
 </div>

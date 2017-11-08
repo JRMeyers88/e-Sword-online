@@ -8,6 +8,10 @@ eSword.factory('BibleFactory', function($q, $http, Url) {
         return $q( (resolve, reject) => {
             $http.get(`${baseURL}/Bible/${bible.id}/${book.id}/${chapter}`)
             .then( (data) => {
+                data.data.map( (obj) => {
+                    obj.abbr = book.abbr;
+                    return obj;
+                });
                 resolve(data);
             })
             .catch( (err) => {

@@ -1,33 +1,41 @@
 'use strict';
 
-eSword.controller('BibleController', function($scope, $q, $window, BibleFactory) {
+eSword.controller('BibleController', function($scope, $q, $sce, $compile, $window, BibleFactory) {
 
 
   $scope.selection = {
     translation: {tag: "English Standard", id: "esv"},
-    book: {title: "Genesis", id: 1},
-    chapter: {Chapter: 1},
-    commentary: {tag: "Darby", id: "darby"}
+    book: {title: "John", id: 43, abbr: "Joh"},
+    chapter: {Chapter: 3},
+    commentary: {tag: "Robertson", id: "robertson"}
+  }
+
+  $scope.trustAsHtml = function(html_code) {
+    return $sce.trustAsHtml(html_code);
   }
 
   $scope.getBibleAndCommentary = () => {
+    $scope.selection.chapter = {Chapter: 1};
     $scope.getBible();
     $scope.getBookCommentary();
     $scope.getBookChapters();
   }
 
+  $scope.selectedverse = null;
+
   $scope.getVerse = (verse) => {
-    console.log('verse', verse)
+    $('.selectedverse').removeClass('selectedverse');
+    $scope.selectedverse = verse;
     $scope.getVerseCommentary(verse);
     $scope.getBibleVerse(verse);
-    $scope.getTSKComment(verse)
+    $scope.getTSKComment(verse);
   }
 
   $scope.getBible = () => {
     BibleFactory.getBible($scope.selection.translation, $scope.selection.book, $scope.selection.chapter.Chapter)
       .then( (bible) => {
-        console.log('bible', bible.data);
         $scope.bibleContents = bible.data;
+        $scope.$broadcast("items_changed")
       })
       .catch( (err) => {
         console.log('error', err);
@@ -47,8 +55,8 @@ eSword.controller('BibleController', function($scope, $q, $window, BibleFactory)
   $scope.getBibleVerse = (verse) => {
     BibleFactory.getBibleVerse($scope.selection.book, $scope.selection.chapter.Chapter, verse)
       .then( (bibleVerse) => {
-        console.log('bible verse', bibleVerse);
         $scope.bibleVerse = bibleVerse.data;
+        // highlight = true;
       })
       .catch( (err) => {
         console.log('error', err);
@@ -59,6 +67,7 @@ eSword.controller('BibleController', function($scope, $q, $window, BibleFactory)
     BibleFactory.getBookCommentary($scope.selection.commentary, $scope.selection.book)
       .then( (commentary) => {
         $scope.commentaryContents = commentary.data;
+        $scope.$broadcast("items_changed")
       })
       .catch( (err) => {
         console.log('error', err);
@@ -84,6 +93,12 @@ eSword.controller('BibleController', function($scope, $q, $window, BibleFactory)
       console.log('error', err);
     })
   }
+
+  $scope.getBible();
+  $scope.getBookCommentary();
+  $scope.getBookChapters();
+  $scope.getBibleVerse(16);
+  $scope.getTSKComment(16);
 
   $scope.bibles = [
     {
@@ -469,66 +484,6 @@ eSword.controller('BibleController', function($scope, $q, $window, BibleFactory)
       title: "Revelation",
       abbr: "Rev",
       chap: "22"
-    },{
-      id: "67",
-      title: "Tobit",
-      abbr: "Tob",
-      chap: "14"
-    },{
-      id: "68",
-      title: "Judith",
-      abbr: "Jdt",
-      chap: "16"
-    },{
-      id: "69",
-      title: "Wisdom",
-      abbr: "Wis",
-      chap: "19"
-    },{
-      id: "70",
-      title: "Sirach",
-      abbr: "Sir",
-      chap: "51"
-    },{
-      id: "71",
-      title: "Baruch",
-      abbr: "Bar",
-      chap: "6"
-    },{
-      id: "72",
-      title: "1 Maccabees",
-      abbr: "1Ma",
-      chap: "16"
-    },{
-      id: "73",
-      title: "2 Maccabees",
-      abbr: "2Ma",
-      chap: "15"
-    },{
-      id: "74",
-      title: "1 Esdras",
-      abbr: "1Es",
-      chap: "9"
-    },{
-      id: "75",
-      title: "2 Esdras",
-      abbr: "2Es",
-      chap: "16"
-    },{
-      id: "76",
-      title: "3 Maccabees",
-      abbr: "3Ma",
-      chap: "7"
-    },{
-      id: "77",
-      title: "4 Maccabees",
-      abbr: "4Ma",
-      chap: "18"
-    },{
-      id: "78",
-      title: "Prayer of Manasseh",
-      abbr: "Man",
-      chap: "1"
     }
   ];
 

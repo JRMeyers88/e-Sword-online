@@ -633,21 +633,21 @@ a.verse {
 
 .biblediv {
   width: 50%;
-  height: 500px;
+  height: 55vh;
   float: left;
   overflow-y: scroll;
 }
 
 .commentdiv {
   width: 50%;
-  height: 500px;
+  height: 55vh;
   float: right;
   overflow-y: scroll;
 }
 
 .kjvpdiv {
   width: 50%;
-  height: 300px;
+  height: 35.5vh;
   float: left;
   overflow-y: scroll;
   border-top: 1.5px solid #999999;
@@ -655,7 +655,7 @@ a.verse {
 
 .dictdiv {
   width: 50%;
-  height: 300px;
+  height: 35.5vh;
   float: right;
   overflow-y: scroll;
   border-top: 1.5px solid #999999;  

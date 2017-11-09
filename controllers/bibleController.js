@@ -1,94 +1,191 @@
 'use strict';
 
-eSword.controller('BibleController', function($scope, $q, $window, BibleFactory) {
+eSword.controller('BibleController', function($scope, $q, $sce, $compile, $window, BibleFactory) {
 
 
   $scope.selection = {
-    translation: null,
-    book: null,
-    chapter: 1,
-    commentary: null
+    translation: {id: "esv"},
+    book: {id: 43, abbr: "Joh"},
+    chapter: {Chapter: 3},
+    commentary: {id: "cambridge"}
+  }
+
+  $scope.trustAsHtml = function(html_code) {
+    return $sce.trustAsHtml(html_code);
   }
 
   $scope.getBibleAndCommentary = () => {
-    $scope.getBibles();
-    $scope.getCommentaries();
+    $scope.selection.chapter = {Chapter: 1};
+    $scope.getBible();
+    $scope.getBookCommentary();
+    $scope.getBookChapters();
   }
 
-  $scope.getBibles = () => {
-    BibleFactory.getBibles($scope.selection.translation, $scope.selection.book, $scope.selection.chapter)
-      .then( (bibles) => {
-        console.log('bibles', bibles);
-        $scope.bibleContents = bibles.data;
-        console.log('scope.contents', $scope.bibleContents);
+  $scope.selectedverse = null;
+
+  $scope.getVerse = (verse) => {
+    $('.selectedverse').removeClass('selectedverse');
+    $scope.selectedverse = verse;
+    $scope.getVerseCommentary(verse);
+    $scope.getBibleVerse(verse);
+    $scope.getTSKComment(verse);
+  }
+
+  $scope.getBible = () => {
+    BibleFactory.getBible($scope.selection.translation, $scope.selection.book, $scope.selection.chapter.Chapter)
+      .then( (bible) => {
+        $scope.bibleContents = bible.data;
+        $scope.$broadcast("items_changed")
       })
       .catch( (err) => {
         console.log('error', err);
       });
   }
 
-  $scope.getCommentaries = () => {
-    BibleFactory.getCommentaries($scope.selection.commentary, $scope.selection.book)
-      .then( (commentaries) => {
-        console.log('commentary', commentaries);
-        $scope.commentaryContents = commentaries.data;
-        console.log('scope.commentaryContents', $scope.commentaryContents);
+  // $scope.getPrev = () => {
+  //   BibleFactory.getBible($scope.selection.translation, $scope.selection.book, $scope.selection.chapter.Chapter)
+  //     .then( (bible) => {
+  //       $scope.bibleContents = bible.data;
+  //       $scope.$broadcast("items_changed")
+  //     })
+  //     .catch( (err) => {
+  //       console.log('error', err);
+  //     });
+  // }
+
+  $scope.getBookChapters = () => {
+    BibleFactory.getChapters($scope.selection.translation, $scope.selection.book)
+    .then( (chapters) => {
+      $scope.chapters = chapters.data;
+    })
+    .catch( (err) => {
+      console.log('err', err);
+    })
+  }
+
+  $scope.getBibleVerse = (verse) => {
+    BibleFactory.getBibleVerse($scope.selection.book, $scope.selection.chapter.Chapter, verse)
+      .then( (bibleVerse) => {
+        $scope.bibleVerse = bibleVerse.data;
+        // highlight = true;
       })
       .catch( (err) => {
         console.log('error', err);
       });
   }
+
+  $scope.getBookCommentary = () => {
+    BibleFactory.getBookCommentary($scope.selection.commentary, $scope.selection.book)
+      .then( (commentary) => {
+        $scope.commentaryContents = commentary.data;
+        $scope.$broadcast("items_changed")
+      })
+      .catch( (err) => {
+        console.log('error', err);
+      });
+  }
+
+  $scope.getVerseCommentary = (verse) => {
+    BibleFactory.getVerseCommentary($scope.selection.commentary, $scope.selection.book, $scope.selection.chapter.Chapter, verse)
+      .then( (verseCommentary) => {
+        $scope.commentaryContents = verseCommentary.data;
+      })
+      .catch( (err) => {
+        console.log('error', err);
+      });
+  }
+
+  $scope.getTSKComment = (verse) => {
+    BibleFactory.getTSKCommentary($scope.selection.book, $scope.selection.chapter.Chapter, verse)
+    .then( (commentVerse) => {
+      $scope.tskContents = commentVerse.data;
+    })
+    .catch( (err) => {
+      console.log('error', err);
+    })
+  }
+
+  // $scope.getKJVComment = (verse) => {
+  //   BibleFactory.getKJV($scope.selection.book, $scope.selection.chapter.Chapter, verse)
+  //   .then( (commentVerse) => {
+  //     $scope.kjvContents = commentVerse.data;
+  //   })
+  //   .catch( (err) => {
+  //     console.log('error', err);
+  //   })
+  // }
+
+  $scope.getBible();
+  $scope.getBookCommentary();
+  $scope.getBookChapters();
+  $scope.getBibleVerse(16);
+  $scope.getTSKComment(16);
 
   $scope.bibles = [
     {
-      tag: "English Standard", 
+      tag: "English Standard Version", 
       id: "esv" 
     },{ 
-      tag: "WEB bible", 
+      tag: "World English Bible", 
       id: "web"
     },{ 
-      tag: "GNB bible", 
+      tag: "Good News Bible", 
       id: "gnb"
     },{ 
-      tag: "King James", 
+      tag: "King James Version", 
       id: "kjv"
-    },{ 
-      tag: "King James+", 
-      id: "kjv+"
-    },{ 
-      tag: "WEBA bible", 
-      id: "weba"
+    },{
+      tag: "Shinkaiyaku Seisho",
+      id: "japanesess"
+    },{
+      tag: "Kougo-yaku",
+      id: "japaneseky"
     }
   ];
 
   $scope.commentaries = [
     {
-      tag: "Cambridge",
+      tag: "Cambridge Bible",
       id: "cambridge"
     },{
-      tag: "Darby",
+      tag: "John Darby",
       id: "darby"
     },{
-      tag: "Hawker",
+      tag: "Robert Hawker",
       id: "hawker"
     },{
-      tag: "Johnson",
+      tag: "B.W. Johnson",
       id: "johnson"
     },{
-      tag: "Meyer",
+      tag: "F.B. Meyer",
       id: "meyer"
     },{
-      tag: "Popular",
+      tag: "Popular New Testament",
       id: "popular"
     },{
-      tag: "Robertson",
+      tag: "Robertson's Word Pictures",
       id: "robertson"
     },{
-      tag: "TSK",
-      id: "tsk"
-    },{
-      tag: "Vincent",
+      tag: "Vincent's Word Studies",
       id: "vincent"
+    },{
+      tag: "Benson",
+      id: "benson"
+    },{
+      tag: "Brooks",
+      id: "brooks"
+    },{
+      tag: "Expositor's Bible",
+      id: "ebc"
+    },{
+      tag: "Keil & Delitzche",
+      id: "kd"
+    },{
+      tag: "MacLaren",
+      id: "maclaren"
+    },{
+      tag: "Sermon Bible",
+      id: "sbc"
     },
   ]
 
@@ -423,66 +520,6 @@ eSword.controller('BibleController', function($scope, $q, $window, BibleFactory)
       title: "Revelation",
       abbr: "Rev",
       chap: "22"
-    },{
-      id: "67",
-      title: "Tobit",
-      abbr: "Tob",
-      chap: "14"
-    },{
-      id: "68",
-      title: "Judith",
-      abbr: "Jdt",
-      chap: "16"
-    },{
-      id: "69",
-      title: "Wisdom",
-      abbr: "Wis",
-      chap: "19"
-    },{
-      id: "70",
-      title: "Sirach",
-      abbr: "Sir",
-      chap: "51"
-    },{
-      id: "71",
-      title: "Baruch",
-      abbr: "Bar",
-      chap: "6"
-    },{
-      id: "72",
-      title: "1 Maccabees",
-      abbr: "1Ma",
-      chap: "16"
-    },{
-      id: "73",
-      title: "2 Maccabees",
-      abbr: "2Ma",
-      chap: "15"
-    },{
-      id: "74",
-      title: "1 Esdras",
-      abbr: "1Es",
-      chap: "9"
-    },{
-      id: "75",
-      title: "2 Esdras",
-      abbr: "2Es",
-      chap: "16"
-    },{
-      id: "76",
-      title: "3 Maccabees",
-      abbr: "3Ma",
-      chap: "7"
-    },{
-      id: "77",
-      title: "4 Maccabees",
-      abbr: "4Ma",
-      chap: "18"
-    },{
-      id: "78",
-      title: "Prayer of Manasseh",
-      abbr: "Man",
-      chap: "1"
     }
   ];
 

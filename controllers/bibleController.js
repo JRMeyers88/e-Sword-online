@@ -4,10 +4,10 @@ eSword.controller('BibleController', function($scope, $q, $sce, $compile, $windo
 
 
   $scope.selection = {
-    translation: {tag: "English Standard", id: "esv"},
-    book: {title: "John", id: 43, abbr: "Joh"},
+    translation: {id: "esv"},
+    book: {id: 43, abbr: "Joh"},
     chapter: {Chapter: 3},
-    commentary: {tag: "Robertson", id: "robertson"}
+    commentary: {id: "cambridge"}
   }
 
   $scope.trustAsHtml = function(html_code) {
@@ -41,6 +41,17 @@ eSword.controller('BibleController', function($scope, $q, $sce, $compile, $windo
         console.log('error', err);
       });
   }
+
+  // $scope.getPrev = () => {
+  //   BibleFactory.getBible($scope.selection.translation, $scope.selection.book, $scope.selection.chapter.Chapter)
+  //     .then( (bible) => {
+  //       $scope.bibleContents = bible.data;
+  //       $scope.$broadcast("items_changed")
+  //     })
+  //     .catch( (err) => {
+  //       console.log('error', err);
+  //     });
+  // }
 
   $scope.getBookChapters = () => {
     BibleFactory.getChapters($scope.selection.translation, $scope.selection.book)
@@ -94,6 +105,16 @@ eSword.controller('BibleController', function($scope, $q, $sce, $compile, $windo
     })
   }
 
+  // $scope.getKJVComment = (verse) => {
+  //   BibleFactory.getKJV($scope.selection.book, $scope.selection.chapter.Chapter, verse)
+  //   .then( (commentVerse) => {
+  //     $scope.kjvContents = commentVerse.data;
+  //   })
+  //   .catch( (err) => {
+  //     console.log('error', err);
+  //   })
+  // }
+
   $scope.getBible();
   $scope.getBookCommentary();
   $scope.getBookChapters();
@@ -102,54 +123,69 @@ eSword.controller('BibleController', function($scope, $q, $sce, $compile, $windo
 
   $scope.bibles = [
     {
-      tag: "English Standard", 
+      tag: "English Standard Version", 
       id: "esv" 
     },{ 
-      tag: "WEB bible", 
+      tag: "World English Bible", 
       id: "web"
     },{ 
-      tag: "GNB bible", 
+      tag: "Good News Bible", 
       id: "gnb"
     },{ 
-      tag: "King James", 
+      tag: "King James Version", 
       id: "kjv"
-    },{ 
-      tag: "King James+", 
-      id: "kjv+"
-    },{ 
-      tag: "WEBA bible", 
-      id: "weba"
+    },{
+      tag: "Shinkaiyaku Seisho",
+      id: "japanesess"
+    },{
+      tag: "Kougo-yaku",
+      id: "japaneseky"
     }
   ];
 
   $scope.commentaries = [
     {
-      tag: "Cambridge",
+      tag: "Cambridge Bible",
       id: "cambridge"
     },{
-      tag: "Darby",
+      tag: "John Darby",
       id: "darby"
     },{
-      tag: "Hawker",
+      tag: "Robert Hawker",
       id: "hawker"
     },{
-      tag: "Johnson",
+      tag: "B.W. Johnson",
       id: "johnson"
     },{
-      tag: "Meyer",
+      tag: "F.B. Meyer",
       id: "meyer"
     },{
-      tag: "Popular",
+      tag: "Popular New Testament",
       id: "popular"
     },{
-      tag: "Robertson",
+      tag: "Robertson's Word Pictures",
       id: "robertson"
     },{
-      tag: "TSK",
-      id: "tsk"
-    },{
-      tag: "Vincent",
+      tag: "Vincent's Word Studies",
       id: "vincent"
+    },{
+      tag: "Benson",
+      id: "benson"
+    },{
+      tag: "Brooks",
+      id: "brooks"
+    },{
+      tag: "Expositor's Bible",
+      id: "ebc"
+    },{
+      tag: "Keil & Delitzche",
+      id: "kd"
+    },{
+      tag: "MacLaren",
+      id: "maclaren"
+    },{
+      tag: "Sermon Bible",
+      id: "sbc"
     },
   ]
 

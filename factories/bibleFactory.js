@@ -84,6 +84,20 @@ eSword.factory('BibleFactory', function($q, $http, Url) {
         });
     }
 
+    // let getKJV = (book, chapter, verse) => {
+    //     return $q( (resolve, reject) => {
+    //         let version = 'kjv+';        
+    //         $http.get(`${baseURL}/Bible/${version}/${book.id}/${chapter}/${verse}`)
+    //         .then( (data) => {
+    //             resolve(data);
+    //         })
+    //         .catch( (err) => {
+    //             console.log('err', err);
+    //             reject(err);
+    //         });
+    //     });
+    // };
+
     return { getBible, getBibleVerse, getChapters, getBookCommentary, getVerseCommentary, getTSKCommentary }
   
 })

@@ -515,14 +515,23 @@ p {
   margin: 1em 0;
 }
 
+.biblediv p {
+  margin: 0.4em 0;
+}
+
 
 select {
   display: inline-block;
 }
 
-/* **** */
+table {
+  width: 100%;
+  table-layout: fixed;
+  border: thin solid #999999;
+  border-collapse: collapse;
+}
 
-/* td {
+td {
   border: thin solid #999999;
   padding: 4px;
 }
@@ -536,7 +545,7 @@ th {
 
 tr {
   vertical-align: top;
-} */
+}
 
 a.verse {
   font-size: 75%;
@@ -544,50 +553,6 @@ a.verse {
   color: #4DB380;
   cursor: pointer;
 }
-
-/* .biblediv {
-  position: fixed;
-  top: 50px;
-  left: 0px;
-  padding-left: 8px;
-  padding-right: 8px;
-  background-color: #E7EDF0;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-
-.commentdiv {
-  position: fixed;
-  bottom: 30px;
-  right: 0px;
-  padding-left: 8px;
-  padding-right :8px;
-  background-color: #E7EDF0;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-
-.dictdiv {
-  position: fixed;
-  top: 50px;
-  right: 0px;
-  padding-left: 8px;
-  padding-right: 8px;
-  background-color: #E7EDF0;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-
-.kjvpdiv {
-  position: fixed;
-  bottom: 30px;
-  left: 0px;
-  padding-left: 8px;
-  padding-right: 8px;
-  background-color: #E7EDF0;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-} */
 
 .header {
   display: block;
@@ -623,20 +588,10 @@ a.verse {
   text-align: center;
 }
 
-/* .logo { 
-	float: left;
-	width: 46px;
-	height: 42px;
-	background-size: 100%;
-	overflow: hidden;
-	background: transparent url(images/logo.png) no-repeat;
-} */
-
 .study p {
   padding: 0 10px;
 }
 
-/* **get location** */
 .biblediv i {
   color: #8A8A8A;  
 }
@@ -650,37 +605,6 @@ a.verse {
 	vertical-align: super;
 	font-size: 75%;
 }
-
-/* 
-p.indent1 {
-  margin-left: 24px;
-}
-
-p.indent2 {
-  margin-left: 48px;
-}
-
-p.indent3 {
-  margin-left: 72px;
-}
-
-p.indent4 {
-  margin-left: 96px;
-}
-
-p.indent5 {
-  margin-left: 120px;
-}
-
-p.indent6 {
-  margin-left: 144px;
-}
-
-p.quote {
-  margin-left: 24px;
-  margin-right: 24px;
-  font-style: italic;
-} */
 
 .bibleselect {
   width:20%;
@@ -702,11 +626,6 @@ p.quote {
 /* ****************************************** */
 /* **********CUSTOM TAG STYLING************* */
 /* **************************************** */
-
-
-
-
-/* ****************************************** */
 
 .nav {
   width: 100%;
@@ -755,20 +674,20 @@ gra {
 }
 
 grk {
-  font-family: 'Galatia SIL';
+  /* font-family: 'Galatia SIL'; */
   font-size: 115%;
   color: #4D80B3;
 }
 
 heb {
-  font-family: 'Ezra SIL';
+  /* font-family: 'Ezra SIL'; */
   font-size: 115%;
   text-align: right;
   color: #4D80B3;
 }
 
 lat {
-  font-family: 'Doulos SIL';
+  /* font-family: 'Doulos SIL'; */
   font-size: 120%;
   color: #4D80B3;
 }
@@ -777,6 +696,7 @@ num {
   color: #804DB3;
   text-decoration: underline;
   cursor: pointer;
+  font-size: .6em;
 }
 
 red {
@@ -785,8 +705,8 @@ red {
 
 ref {
   color: #4DB380;
-  text-decoration: underline;
-  cursor: pointer;
+  /* text-decoration: underline;
+  cursor: pointer; */
 }
 
 tvm {

@@ -13,8 +13,8 @@
 
       <select ng-change="getBible()" ng-options="chapter as chapter.Chapter for chapter in chapters track by chapter.Chapter" ng-model="selection.chapter"></select>
 
-      <button><red>Last</red></button>      
-      <button>Next</button> 
+      <!-- <button ng-click="getPrev()"><red>Prev</red></button>      
+      <button>Next</button>  -->
 
       <select class="commentselect" ng-change="getBookCommentary()" ng-options="comment as comment.tag for comment in commentaries track by comment.id" ng-model="selection.commentary"></select>
       <br>
@@ -28,7 +28,7 @@
   <div class="biblediv" autoscroll>
     <div ng-repeat="content in bibleContents">
 
-        <p ng-click="selected = !selected; getVerse(content.Verse)" ng-class="{'selectedverse':selected}" ng-model="selection.verse"><span ng-bind-html="(content.abbr)+' '+(content.Chapter)+':'+(content.Verse)+' '"></span><span ng-bind-html="trustAsHtml(content.Scripture)"></span></p>
+        <p class="bible" ng-click="selected = !selected; getVerse(content.Verse)" ng-class="{'selectedverse':selected}" ng-model="selection.verse"><span class="verse" ng-bind-html="(content.abbr)+' '+(content.Chapter)+':'+(content.Verse)+' '"></span><span ng-bind-html="trustAsHtml(content.Scripture)"></span></p>
       
     </div>
   </div>
